@@ -1,3 +1,13 @@
+body {
+  padding-left: 12%;
+  padding-right: 12%;
+  font-family: Verdana, Arial, sans-serif;
+  font-size: 11px;
+  box-shadow: 0px 0px 8px rgba(0,0,0,0.7)
+}
+
+
+
 .App {
   text-align: center;
 }
@@ -20,3 +30,33 @@
 .App-link {
   color: #09d3ac;
 }
+
+
+.second-div {
+  display: flex;
+}
+.movie-list {
+  padding-right: 20%;
+}
+.movie-image {
+  height: 219px;
+  width: 150px;
+  padding: 8px;
+}
+.movie-title {
+  color: #136CB2;
+}
+.movie-card {
+  flex-direction: row!important;
+  background-color: #f6f6f5;
+  margin: 2px;
+  border: #fff 1px solid;
+}
+.movie-overview {
+  opacity: 0.8;
+}
+
+.card-deck {
+  display: flex;
+}
+
