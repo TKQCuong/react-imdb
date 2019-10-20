@@ -1,36 +1,65 @@
 import React, { useState, useEffect } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
-import Card from "react-bootstrap/Card";
-import CardDeck from "react-bootstrap/CardDeck";
-import Navbar from "react-bootstrap/Navbar";
-import Nav from "react-bootstrap/Nav";
-import Form from "react-bootstrap/Form";
-import FormControl from "react-bootstrap/FormControl";
-import Button from "react-bootstrap/Button";
 import Moment from "react-moment";
-import Carousel from "react-bootstrap/Carousel";
-// import Logo from "./icon-popularity.png";
-// import Logo from "./breaking-bad.jpg";
+import {
+  Carousel,
+  Card,
+  CardDeck,
+  Navbar,
+  Nav,
+  Form,
+  FormControl,
+  Button,
+  NavDropdown
+} from "react-bootstrap";
+
 import "./App.css";
 
-
 function App() {
-  const [movie, setMovie] = useState(null);
+  //useState
+  const [movie, setMovie] = useState([]);
+  const [page, setPage] = useState(1);
 
+  // const [genre, setGenre] = useState([]);
+  // const [clone, setClone] = useState([])
+  console.log("page", page);
+
+  //useEffect
   useEffect(() => {
     getMovie();
+    // getGenre();
   }, []);
+  console.log("movie", movie);
 
+  //API movies
   const getMovie = async () => {
     const api = "3da1045d9dcc20051351c38bd3fafa77";
     let response = await fetch(
-      `https://api.themoviedb.org/3/trending/all/day?api_key=${api}`
+      `https://api.themoviedb.org/3/trending/all/day?api_key=${api}&page=${page}`
     );
-    let data = await response.json();
-    setMovie(data.results);
-    console.log("data", data);
+    const data = await response.json();
+    const newMovie = movie.concat(data.results);
+    setMovie(newMovie);
+    // setClone(newMovie);
+    setPage(page + 1);
   };
 
+  //API categories
+  // const getGenre = async () => {
+  //   const api = "3da1045d9dcc20051351c38bd3fafa77";
+  //   let movieGenre = await fetch(
+  //     `https://api.themoviedb.org/3/genre/movie/list?api_key=${api}&page=${page}`
+  //   );
+  //   const data = await movieGenre.json();
+  //   setGenre(data.genres);
+  // };
+
+  // const genreSearch = () => {
+  //   const newGenre = clone.filter(el => el.genres.name)
+  //   setMovie (newGenre)
+  // };
+
+  //Return HTML
   return (
     <div className="main-content">
       <div className="header">
@@ -58,19 +87,27 @@ function App() {
             </Carousel.Item>
           </Carousel>
         </div>
-
-        <Navbar bg="dark" variant="dark" className="sticky-top">
-          <Navbar.Brand href="#home" id="scroll">IMDB</Navbar.Brand>
-          <Nav className="mr-auto">
-            <Nav.Link href="#home">Home</Nav.Link>
-            <Nav.Link href="#features">Features</Nav.Link>
-            <Nav.Link href="#pricing">Pricing</Nav.Link>
-          </Nav>
-          <Form inline>
-            <FormControl type="text" placeholder="Search" className="mr-sm-2" />
-            <Button variant="outline-info">Search</Button>
-          </Form>
-        </Navbar>
+        <div className="nav-bar">
+          <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
+            <Navbar.Brand href="#home" className="IMDB">
+              IMDb
+            </Navbar.Brand>
+            <Navbar.Toggle aria-controls="responsive-navbar-nav" />
+            <Navbar.Collapse id="responsive-navbar-nav">
+              <Nav className="mr-auto">
+                <Nav.Link href="#features">Movies & Showtimes</Nav.Link>
+                <Nav.Link href="#pricing">Celebs & Photos</Nav.Link>
+                <Nav.Link href="#pricing">News & Communities</Nav.Link>
+              </Nav>
+              <Nav>
+                <Nav.Link href="#deets">IMDb Pro</Nav.Link>
+                <Nav.Link eventKey={2} href="#memes">
+                  Help
+                </Nav.Link>
+              </Nav>
+            </Navbar.Collapse>
+          </Navbar>
+        </div>
       </div>
 
       <div className="second-div">
@@ -113,13 +150,17 @@ function App() {
         </div>
 
         <div className="social-media">
-          <h1>Social media</h1>
+          <span className="first-heading">New Movies</span>
+          <br></br>
+          <span className="second-heading">In Theaters</span>
         </div>
       </div>
 
-      <footer>
-        <h1>Footer</h1>
-      </footer>
+      <div className="next-page">
+        <button className="myButton" onClick={() => getMovie()}>
+          See more movies in theaters
+        </button>
+      </div>
     </div>
   );
 }
