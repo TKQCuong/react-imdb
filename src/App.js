@@ -1,18 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Moment from "react-moment";
-import {
-  Carousel,
-  Card,
-  CardDeck,
-  Navbar,
-  Nav,
-  Form,
-  FormControl,
-  Button,
-  NavDropdown
-} from "react-bootstrap";
-
+import { Carousel, Card, CardDeck, Navbar, Nav } from "react-bootstrap";
 import "./App.css";
 
 function App() {
@@ -20,8 +9,6 @@ function App() {
   const [movie, setMovie] = useState([]);
   const [page, setPage] = useState(1);
 
-  // const [genre, setGenre] = useState([]);
-  // const [clone, setClone] = useState([])
   console.log("page", page);
 
   //useEffect
@@ -43,21 +30,6 @@ function App() {
     // setClone(newMovie);
     setPage(page + 1);
   };
-
-  //API categories
-  // const getGenre = async () => {
-  //   const api = "3da1045d9dcc20051351c38bd3fafa77";
-  //   let movieGenre = await fetch(
-  //     `https://api.themoviedb.org/3/genre/movie/list?api_key=${api}&page=${page}`
-  //   );
-  //   const data = await movieGenre.json();
-  //   setGenre(data.genres);
-  // };
-
-  // const genreSearch = () => {
-  //   const newGenre = clone.filter(el => el.genres.name)
-  //   setMovie (newGenre)
-  // };
 
   //Return HTML
   return (
@@ -138,11 +110,6 @@ function App() {
                         {item.overview}{" "}
                       </Card.Text>
                     </Card.Body>
-                    {/* <Card.Footer>
-                      <small className="text-muted">
-                        Last updated 3 mins ago
-                      </small>
-                    </Card.Footer> */}
                   </Card>
                 </CardDeck>
               );
