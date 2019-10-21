@@ -4,17 +4,42 @@ import Moment from "react-moment";
 import { Carousel, Card, CardDeck, Navbar, Nav } from "react-bootstrap";
 import "./App.css";
 
+function MovieCard(props) {
+  return (
+    <CardDeck className="card-deck">
+      <Card className="movie-card">
+        <Card.Img
+          className="movie-image"
+          variant="top"
+          src={`https://image.tmdb.org/t/p/original/${props.item.poster_path}`}
+        />
+        <Card.Body>
+          <Card.Title className="movie-title">
+            {props.item.original_title} (
+            <Moment format="YYYY">{props.item.release_date}</Moment>)
+          </Card.Title>
+          <div className="popularity">
+            <span className="icon-popularity">{props.item.popularity}</span>{" "}
+            Popularity
+          </div>
+
+          <Card.Text className="movie-overview">{props.item.overview} </Card.Text>
+        </Card.Body>
+      </Card>
+    </CardDeck>
+  );
+}
+
 function App() {
   //useState
   const [movie, setMovie] = useState([]);
   const [page, setPage] = useState(1);
-
+  const [filteredMovies, setFilteredMovies] = useState([]);
   console.log("page", page);
 
   //useEffect
   useEffect(() => {
     getMovie();
-    // getGenre();
   }, []);
   console.log("movie", movie);
 
@@ -27,7 +52,6 @@ function App() {
     const data = await response.json();
     const newMovie = movie.concat(data.results);
     setMovie(newMovie);
-    // setClone(newMovie);
     setPage(page + 1);
   };
 
@@ -85,34 +109,8 @@ function App() {
       <div className="second-div">
         <div className="movie-list">
           {movie &&
-            movie.map(item => {
-              return (
-                <CardDeck className="card-deck">
-                  <Card className="movie-card">
-                    <Card.Img
-                      className="movie-image"
-                      variant="top"
-                      src={`https://image.tmdb.org/t/p/original/${item.poster_path}`}
-                    />
-                    <Card.Body>
-                      <Card.Title className="movie-title">
-                        {item.original_title} (
-                        <Moment format="YYYY">{item.release_date}</Moment>)
-                      </Card.Title>
-                      <div className="popularity">
-                        <span className="icon-popularity">
-                          {item.popularity}
-                        </span>{" "}
-                        Popularity
-                      </div>
-
-                      <Card.Text className="movie-overview">
-                        {item.overview}{" "}
-                      </Card.Text>
-                    </Card.Body>
-                  </Card>
-                </CardDeck>
-              );
+            movie.map((item) => {
+              return <MovieCard item={item}/>
             })}
         </div>
 
